@@ -10,10 +10,14 @@
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.10.0",
+    "browserify": "^12.0.1",
+    "extend": "^3.0.0",
     "gulp": "^3.9.0",
     "gulp-load-plugins": "^1.1.0",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-slim": "^0.3.0",
-    "gulp-watch": "^4.3.5"
+    "gulp-watch": "^4.3.5",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
