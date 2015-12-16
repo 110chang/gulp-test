@@ -1,7 +1,7 @@
 var gulp = require("gulp");
 var plugins = require('gulp-load-plugins')();
 var source = require('vinyl-source-stream');
-var bs = require('browser-sync');
+var browsersync = require('browser-sync');
 var browserify = require('browserify');
 
 gulp.task("sass", function() {
@@ -10,7 +10,7 @@ gulp.task("sass", function() {
       outputStyle: "expanded"
     }))
     .pipe(gulp.dest("./dest/css"))
-    .pipe(bs.stream());
+    .pipe(browsersync.stream());
 });
 
 gulp.task('slim', function(){
@@ -19,7 +19,7 @@ gulp.task('slim', function(){
       pretty: true
     }))
     .pipe(gulp.dest("./dest"))
-    .pipe(bs.stream());
+    .pipe(browsersync.stream());
 });
 
 // http://qiita.com/seanchas_t/items/96fbb63e5fe36f94a42e
@@ -29,31 +29,30 @@ gulp.task('concat', function() {
   browserify({
     entries: ['./src/js/main.js'],
     debug : !gulp.env.production
-  })
-  .bundle()
-  //.pipe(plugins.rename('all.js'))
+  }).bundle()
   .pipe(source('all.js'))
   .pipe(gulp.dest("./dest/js"))
-  .pipe(bs.stream());
+  .pipe(browsersync.stream());
 });
 
 // BrowserSync
-gulp.task('bs', function() {
-  bs.init(null, {
+gulp.task('browsersync', function() {
+  browsersync.init(null, {
     server: {
       baseDir: './dest',
-      ghostMode: false
+      ghostMode: true,
+      online: false
     }
   });
 });
 
 // Tasks
 gulp.task('reload', function() {
-  bs.reload();
+  browsersync.reload();
 });
 
 // Watch
-gulp.task('default', ['bs'], function() {
+gulp.task('default', ['browsersync'], function() {
   gulp.watch("./src/sass/**/*.sass", ['sass']);
   gulp.watch("./src/js/**/*.js", ['concat']);
   gulp.watch("./src/**/*.slim", ['slim']);
